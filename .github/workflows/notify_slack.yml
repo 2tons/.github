@@ -1,0 +1,22 @@
+on:
+  workflow_call:
+    inputs:
+      MESSAGE:
+        required: true
+        type: string
+    secrets:
+      SLACK_WEBHOOK:
+        required: true
+
+name: Publish Message on Slack
+jobs:
+  deploy:
+    name: Publish Message on Slack
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify on Slack
+        uses: Ilshidur/action-slack@2.1.0
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        with:
+          args: ${{inputs.MESSAGE}}
